@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page Title</title>
+	</head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, initial-scale=1.0">
+	<style>
+	
+		.CF {
+		
+			height: 10px; 
+			width: 10px; 
+			background-color: #555; 
+			border-radius: 50%;  
+			position: absolute; 
+			left: 0px;
+			top: 0px;
+		
+		}
+	
+	.CF {
+		transition: top 0.1s ease-in-out 0s;
+	}
+	
+	.hidden {
+		opacity: 0;
+	}
+	</style>
+	
+	<body>
+
+		<button id="B"> <img id="i" src="1.png" alt="Tree Shaking" style="width:200px; height:200px; position: absolute; left: 43%; top: 200px"> </button>
+		
+	</body>
+	
+	<script>
+	
+		var a = true;
+		var b = document.getElementById("B");
+			
+		var ii = document.getElementById("i");
+			
+		// Initializer
+		var text = document.createElement("p");
+		text.textContent = "Happy Anniversary!";
+		text.style = "position: absolute; left: 34%; top: 450px; font-size: 50px; text-align: center; font-family: sans-serif; transition: opacity 1s ease; color: rgb(150, 0, 150)";
+		text.classList = ["hidden"]
+		document.body.appendChild(text);
+		
+		/*var text = document.createElement("p");
+		text.textContent = "Happy Anniversary!";
+		text.style = "position: absolute; left: 34%; top: 450px; font-size: 50px; text-align: center; font-family: sans-serif; transition: opacity 1s ease; color: rgb(150, 0, 150)";
+		text.classList = ["hidden"]
+		document.body.appendChild(text);*/
+		
+		var render;
+
+		var Clicks = 0;
+		var ClicksST;
+		var Tree = 0;
+		
+		var Time = 0;
+		var Seconds = 0;
+
+		var run = true;
+		
+		function frame() {
+
+			if (Time > 500) {
+
+				//clearInterval(render);
+				Seconds++;
+				Time = 0;
+				
+				if (Seconds > 5 && run) {
+					
+					
+					text.classList = [""]
+					
+					run = false;
+				
+				}
+			
+			} else {
+
+				Time += 100;
+				
+				document.querySelectorAll('.CF').forEach(x=>{
+				
+					if (parseInt(x.style.top) >= window.innerHeight - 110) {
+						x.remove();
+						create();
+					} else {
+					
+						x.style.top = (parseInt(x.style.top) + 100) + "px";
+					
+					}
+					
+				});
+
+			}
+
+		}
+
+		function ClicksF() {
+		
+			var ii = document.getElementById("i");
+			ii.src = "TT.gif";
+		
+		}
+		
+		function create() {
+		
+			var cf = document.createElement("div");
+		
+			cf.class = "CF";
+			cf.style.top = (Math.floor(Math.random() * 1000)) -1300 + "px";
+			cf.style.left = (Math.floor(Math.random() * 99)) + "%";
+			//cf.style.transform = "rotate(10deg)";
+			cf.style["background-color"] = "#" + (Math.floor(Math.random() * 16777215)).toString(16)
+			cf.classList = ["CF"]
+			document.body.appendChild(cf);
+		
+		}
+
+		function animate() {
+			
+			Tree++;	
+				
+			if (Tree == 1) ii.src = "2.png";
+			if (Tree == 2) ii.src = "3.png";
+			if (Tree == 3) ii.src = "4.png";
+			if (Tree == 4) ii.src = "1.png";
+					
+		}
+		
+		b.addEventListener("click", function() {	
+			if (a) {
+			
+				Clicks++;
+			
+				ClicksST = setInterval(function() {
+					
+					a = false;
+					
+					animate();
+					if (Tree == 4) {
+						clearInterval(ClicksST);
+						ii.src = "1.png";
+						Tree = 0;
+						a = true;
+					}
+					
+				}, 250);
+				
+				if (Clicks == 3) {
+				
+					for (var l = 0; l < 300; l++) {
+
+						create();
+					
+					}
+				
+					render = setInterval(frame, 100);
+				
+				}
+
+				
+
+			}
+
+		})
+
+	</script>
+</html>
